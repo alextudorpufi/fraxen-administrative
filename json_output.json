@@ -1,0 +1,51 @@
+{
+    "title": "Executive Financial Leader | Strategic Banking Professional",
+    "gender": "Female",
+    "experience_summary": "30+ years in banking, finance, audit, and executive leadership.",
+    "sector_focus": "Banking and Financial Services, including Leasing and Insurance",
+    "location": "Romania (Remote/Hybrid)",
+    "experience": [
+        {
+            "job_title": "Deputy General Manager \u2013 CFO",
+            "description": "Senior Executive at a Digital Banking Institution",
+            "achievements": [
+                "Contributed to business strategy and capital planning initiatives.",
+                "Ensured compliance with national financial regulations.",
+                "Activated as a key member of Executive Management, reporting to the Board."
+            ]
+        },
+        {
+            "job_title": "Executive Financial Director",
+            "description": "Pivotal Leader in a Digital Bank Launch",
+            "achievements": [
+                "Successfully launched a new digital banking platform.",
+                "Managed significant operational budgets up to 80 million EUR.",
+                "Coordinated financial, MIS, controlling, and logistics divisions."
+            ]
+        },
+        {
+            "job_title": "Executive Vice President & Head of Internal Audit",
+            "description": "Strategic Financial Executive at a Regional Banking Group",
+            "achievements": [
+                "Managed budgets up to 30 million EUR and ensured regulatory compliance.",
+                "Successfully issued 5 million EUR subordinated bonds on public markets.",
+                "Implemented IFRS9, IFRS16, and a new reporting platform, optimizing financial processes."
+            ]
+        },
+        {
+            "job_title": "Deputy General Manager",
+            "description": "Senior Leader at a Captive Finance and Leasing Group",
+            "achievements": [
+                "Managed a group financial strategy and budget of 100 million EUR.",
+                "Coordinated accounting and controlling for multiple entities (leasing, bank, insurance).",
+                "Successfully implemented SAP and cost centers across the group."
+            ]
+        }
+    ],
+    "core_strengths": [
+        "Financial Leadership & Strategy",
+        "Regulatory Compliance & Internal Controls",
+        "Digital Transformation & System Implementation (SAP, IFRS)",
+        "Audit & Risk Management"
+    ]
+}

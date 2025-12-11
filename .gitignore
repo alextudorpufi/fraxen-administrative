@@ -1,0 +1,21 @@
+# Ignore the virtual environment folder
+.venv/
+venv/
+ENV/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore Mac system files
+.DS_Store
+
+# Ignore sensitive secrets and API keys
+api_key.txt
+.env
+secrets.py
+config.json
+
+#other things
+profiles_to_insert
+stuff
