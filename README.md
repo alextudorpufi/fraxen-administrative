@@ -1,5 +1,5 @@
-Project: CV Automation & Executive Matching Engine
-Overview This Python project automates the creation of high-impact resumes and converts career data into usable assets. It is designed to extract value from profiles and intelligently pair business leaders.
+Project: <b>CV Automation & Executive Matching Engine </b><br>
+Overview: This Python project automates the creation of high-impact resumes and converts career data into usable assets. <br>It is designed to extract value from profiles and intelligently pair business leaders.
 
 Key Features
 
