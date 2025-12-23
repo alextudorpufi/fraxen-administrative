@@ -7,7 +7,7 @@ from pptx.enum.shapes import MSO_SHAPE_TYPE
 # --- CONFIGURATION ---
 TEMPLATE_FILE = 'template.pptx'
 JSON_FILE = 'json_output.json'
-OUTPUT_FILE = 'Dora_S_Profile_Final.pptx'
+OUTPUT_FILE = 'New_Profile_Final.pptx'
 
 # --- COLORS ---
 COLOR_PURPLE = RGBColor(137, 87, 230)
@@ -192,23 +192,22 @@ def main():
         print(f"Error loading files: {e}")
         return
 
-    # --- 1. GENDER LOGIC (Colors) ---
+    # 1. GENDER LOGIC
     gender_val = data.get('gender', 'Female')
-    
-    if gender_val.strip().lower() == 'male':
-        target_color = COLOR_BLUE
-        print("Gender is Male -> Using BLUE.")
-    else:
-        target_color = COLOR_PURPLE
-        print("Gender is Female -> Using PURPLE.")
+    target_color = COLOR_BLUE if gender_val.lower() == 'male' else COLOR_PURPLE
 
-    box_names = ['gender_box_main', 'gender_box_1', 'gender_box_2', 'gender_box_3', 'gender_box_4']
-    for name in box_names:
-        update_shape_color(get_shape_by_name(slide, name), target_color)
+    # MATCHING YOUR SELECTION PANE NAMES:
+    # Small squares: box1, box2, box3, box4, box5
+    # Profile group: profile_gender
+    color_targets = ['box1', 'box2', 'box3', 'box4', 'box5', 'profile_gender']
+    for name in color_targets:
+        shp = find_in_shapes(slide.shapes, name)
+        if shp:
+            update_shape_color(shp, target_color)
 
     # --- 2. TEXT UPDATES (Sidebar - Font 14) ---
     print("Updating Sidebar...")
-    update_labeled_text(get_shape_by_name(slide, 'sidebar_gender_text'), "Gender:", gender_val, font_size=Pt(14))
+    update_labeled_text(get_shape_by_name(slide, 'sidebar_gender'), "Gender:", gender_val, font_size=Pt(14))
     update_labeled_text(get_shape_by_name(slide, 'sidebar_sectors'), "Sector Focus:", data.get('sector_focus'), font_size=Pt(14))
     update_labeled_text(get_shape_by_name(slide, 'sidebar_location'), "Location:", data.get('location'), font_size=Pt(14))
     
