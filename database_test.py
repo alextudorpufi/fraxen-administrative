@@ -23,7 +23,7 @@ def test_connection():
         cursor = connection.cursor()
         
         # 3. Simple query to verify it works
-        query = "SELECT * FROM executives LIMIT 5;"
+        query = "select * from executive_strengths where executive_id = 1;"
         cursor.execute(query)
 
         records = cursor.fetchall()
