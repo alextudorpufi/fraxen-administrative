@@ -67,7 +67,8 @@ def get_ranked_data(query_list, sectors):
     ranked_results = []
 
     for e in execs:
-        if not sector_match(e): continue
+        if not sector_match(e): 
+            continue
         
         e_h = [h for h in all_highlights if h.executive_id == e.id]
         e_s = [s for s in all_strengths if s.executive_id == e.id]
@@ -90,11 +91,11 @@ def get_ranked_data(query_list, sectors):
                 matches = re.findall(pattern, full_text, re.IGNORECASE)
                 score += len(matches)
         
-        # Filter: If searching, must have at least one match. If not, show all.
+        # Appending matched executives, either by non-filtering or score
         if not query_list or score > 0:
             ranked_results.append({"exec": e, "h": e_h, "s": e_s, "score": score})
 
-    # Sort by score descending (Highest match first)
+    # Sort by score descending
     return sorted(ranked_results, key=lambda x: x['score'], reverse=True)
 
 ranked_execs = get_ranked_data(query_words, selected_sectors)
@@ -104,7 +105,7 @@ st.title("Fractional Executives Catalogue")
 
 if selected_pain:
     st.info(f"**Ranking experts for:** {selected_pain}. (Searching for: {', '.join(query_words)})")
-    
+
 if not ranked_execs:
     st.error("No matches found. Try broadening your keywords.")
 
@@ -115,10 +116,10 @@ for rank, item in enumerate(ranked_execs, 1):
     e_s = item["s"]
     score = item["score"]
     
-    # Header displays rank but NOT the score
+    # Display only the titles + ranks
     header_label = f"#{rank} | {' | '.join(e.title)}"
     
-    # Auto-expand only the #1 match to provide focus
+    # Auto-expand the first ig
     is_expanded = True if (rank == 1 and score > 0) else False
 
     with st.expander(header_label, expanded=is_expanded):
@@ -128,7 +129,7 @@ for rank, item in enumerate(ranked_execs, 1):
         
         st.markdown("---")
         
-        # 1. Career Highlights
+        # Career Highlights
         st.subheader("Career Highlights")
         for h in e_h:
             st.markdown(f"<b>{highlight_text(h.position_title, query_words)}</b> — {highlight_text(h.company_descri, query_words)}", unsafe_allow_html=True)
@@ -136,13 +137,13 @@ for rank, item in enumerate(ranked_execs, 1):
                 if line.strip():
                     st.markdown(f"→ {highlight_text(line.strip(), query_words)}", unsafe_allow_html=True)
         
-        # 2. Core Strengths (Displayed beneath highlights as requested)
+        # Core Strengths
         if e_s:
-            st.markdown("<br>", unsafe_allow_html=True) # Small spacing
+            st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("**Core Strengths:**")
             for s in e_s:
                 st.markdown(f"→ {highlight_text(s.strength_descrip, query_words)}", unsafe_allow_html=True)
 
-# --- FOOTER ---
+# --- SIDEBAR FOOTER ---
 st.sidebar.markdown("---")
 st.sidebar.write(f"**Results Found:** {len(ranked_execs)}")

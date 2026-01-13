@@ -30,7 +30,11 @@ def fetch_all_data():
         # 1. Fetch Executives
         cursor.execute("SELECT * FROM executives ORDER BY id")
         exec_records = [
-            Executive(r[0], r[1], r[2], r[3], [s.strip() for s in r[4].split(',')], [t.strip() for t in r[5].split('|')])
+            Executive(
+                r[0], r[1], r[2], r[3],
+                [s.strip() for s in r[4].split(',')],
+                [t.strip() for t in r[5].split('|')]
+            )
             for r in cursor.fetchall()
         ]
 
