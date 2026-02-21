@@ -1,49 +1,54 @@
 {
-    "title": "Founder | Strategic Financial Leader",
-    "gender": "Male",
-    "experience_summary": "20+ years in financial services, NPL, and corporate restructuring.",
-    "sector_focus": "Financial Services, Non-Performing Loans, Real Estate, Corporate Restructuring, Investment Banking",
-    "location": "Europe (Remote/Hybrid)",
-    "experience": [
-        {
-            "job_title": "Founder & Managing Partner",
-            "description": "Visionary leader establishing and scaling a specialized financial advisory and investment firm.",
-            "achievements": [
-                "Successfully launched and grew a boutique advisory firm, delivering bespoke financial solutions.",
-                "Provided expert strategic guidance on complex financial restructuring and asset optimization projects."
-            ]
-        },
-        {
-            "job_title": "Head of Group Workout Portfolio Management",
-            "description": "Executive driving NPL sales and repossessed asset management for a leading international banking group.",
-            "achievements": [
-                "Built and led a high-performing department, establishing critical processes and group standards for NPL transactions.",
-                "Orchestrated multi-asset NPL sales, coordinating investor coverage and complex case support.",
-                "Pioneered and implemented a comprehensive strategy for repossessed real estate asset management, from acquisition to sale."
-            ]
-        },
-        {
-            "job_title": "Executive Director, Head of Portfolio Management",
-            "description": "Senior leader overseeing NPL portfolio divestment and distressed real estate asset strategies at a major financial institution.",
-            "achievements": [
-                "Successfully executed numerous NPL portfolio sales, spanning diverse asset classes and investor profiles.",
-                "Directed the structuring and implementation of complex restructuring and recovery solutions for high-value real estate clients.",
-                "Developed and coordinated a robust asset management framework for repossessed real estate, optimizing value prior to resale."
-            ]
-        },
-        {
-            "job_title": "Equity Partner | M&A Lead",
-            "description": "Strategic partner instrumental in a significant financial sector M&A transaction and subsequent greenfield launch.",
-            "achievements": [
-                "Spearheaded M&A planning and execution, including strategic carve-out of non-core assets.",
-                "Drove post-merger development from inception, successfully preparing for a new corporate business launch."
-            ]
-        }
-    ],
-    "core_strengths": [
-        "Non-Performing Loan (NPL) Management",
-        "Financial Restructuring & Workout",
-        "Real Estate Asset & Portfolio Management",
-        "Strategic Leadership & Business Development"
-    ]
+  "title": "Fractional CEO | Strategic Growth & Transformation",
+  "gender": "female",
+  "experience_summary": "25+ years (CEO, board member, GM, corporate affairs, private equity)",
+  "sector_focus": "Fmcg, Pharma, Wellness, Energy, Pe-Backed Businesses, Sustainability",
+  "location": "Romania, works hybrid/remote",
+  "experience": [
+    {
+      "job_title": "CEO",
+      "description": "Leading Wellness & Nutrition Brand",
+      "achievements": [
+        "Led turnaround and strategic repositioning for a top national health food company",
+        "Spearheaded stakeholder alignment and strategic partnerships (incl. PE investors)"
+      ]
+    },
+    {
+      "job_title": "General Manager",
+      "description": "Multinational in Direct Sales (CEE Region)",
+      "achievements": [
+        "Oversaw 3 markets; led award-winning team, delivering sustained double-digit growth",
+        "Revitalized underperforming countries through cross-market strategy & change leadership"
+      ]
+    },
+    {
+      "job_title": "M&A Implementations Expertise",
+      "description": "",
+      "achievements": [
+        "3 M&A implementations in various industries (pharma; oil & gas; wellness & nutrition)",
+        "Gained diverse learnings (2 successful, 1 flat outcome)"
+      ]
+    },
+    {
+      "job_title": "Commercial Director & Board Member",
+      "description": "Global Pharma Leader",
+      "achievements": [
+        "Achieved market leadership in multiple therapeutic areas (USD 40M+ turnover)",
+        "Built and led 100+ member team; drove double-digit growth across all commercial lines"
+      ]
+    },
+    {
+      "job_title": "Board Member",
+      "description": "Art Museum & Angel Investor Network",
+      "achievements": [
+        "Active on boards in culture and women-led investment community",
+        "Championing gender equality in early-stage investments & entrepreneurial education"
+      ]
+    }
+  ],
+  "core_strengths": [
+    "Led turnarounds and strategic growth across wellness, sales, pharma",
+    "Delivered multi-market leadership and award-winning team performance",
+    "Expert in board governance, stakeholder engagement, partnerships"
+  ]
 }
