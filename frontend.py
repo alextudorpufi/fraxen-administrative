@@ -2,6 +2,9 @@ import re
 import json
 import io
 import os
+import shutil
+import subprocess
+import sys
 import streamlit as st
 import pandas as pd
 from database import fetch_all_data, Executive, Highlight, Strength
@@ -300,8 +303,246 @@ def render_catalogue_page():
 
 
 def render_test_tool_page():
-    st.title("Test Tool")
-    st.write("This is a placeholder page for your next tool. Replace this with the new workflow.")
+    st.title("Instant Profile Tool")
+    st.write("Paste a CV, generate JSON, then export SQL or PPTX.")
+
+    def load_cv_text() -> str:
+        try:
+            with open("cv_text.txt", "r", encoding="utf-8") as f:
+                return f.read()
+        except FileNotFoundError:
+            return ""
+
+    if "cv_text" not in st.session_state:
+        st.session_state.cv_text = load_cv_text()
+
+    cv_text = st.text_area("Paste CV text", height=300, key="cv_text")
+
+    def run_script(script_name: str):
+        return subprocess.run(
+            [sys.executable, script_name],
+            capture_output=True,
+            text=True
+        )
+
+    def sanitize_export_name(name: str) -> str:
+        cleaned = name.strip()
+        cleaned = cleaned.replace("/", "_").replace("\\", "_")
+        return cleaned
+
+    def build_pptx_with_title_suffix(suffix: str):
+        try:
+            with open("json_output.json", "r", encoding="utf-8") as f:
+                original_text = f.read()
+            data = json.loads(original_text)
+        except Exception as ex:
+            return False, f"Failed to read JSON: {ex}"
+
+        base_title = (data.get("title") or "").strip()
+        data["title"] = f"{base_title} - {suffix}" if base_title else suffix
+
+        try:
+            with open("json_output.json", "w", encoding="utf-8") as f:
+                f.write(json.dumps(data, ensure_ascii=False, indent=2))
+
+            result = run_script("json_to_pptx.py")
+            output_text = f"{result.stdout}\n{result.stderr}".lower()
+            if result.returncode != 0 or "error" in output_text:
+                return False, "PPTX generation failed."
+        finally:
+            with open("json_output.json", "w", encoding="utf-8") as f:
+                f.write(original_text)
+
+        return True, "PPTX generated."
+
+    col_a, col_b, col_c = st.columns(3)
+
+    with col_a:
+        if st.button("Run CV to JSON"):
+            if not cv_text.strip():
+                st.error("Please paste CV text first.")
+            else:
+                with open("cv_text.txt", "w", encoding="utf-8") as f:
+                    f.write(cv_text)
+
+                result = run_script("cv_to_json.py")
+                output_text = f"{result.stdout}\n{result.stderr}".lower()
+                json_exists = os.path.exists("json_output.json")
+                if result.returncode != 0 or "error" in output_text or not json_exists:
+                    st.error("JSON couldn't be generated.")
+                else:
+                    st.success("JSON generated.")
+
+                with st.expander("cv_to_json.py output"):
+                    if result.stdout:
+                        st.code(result.stdout)
+                    if result.stderr:
+                        st.code(result.stderr)
+
+    with col_b:
+        if st.button("Run JSON to SQL"):
+            if not os.path.exists("json_output.json"):
+                st.error("json_output.json not found. Run CV to JSON first.")
+            else:
+                result = run_script("json_to_sql.py")
+                if result.returncode != 0:
+                    st.error("json_to_sql.py failed.")
+                else:
+                    st.success("SQL generated.")
+
+                with st.expander("json_to_sql.py output"):
+                    if result.stdout:
+                        st.code(result.stdout)
+                    if result.stderr:
+                        st.code(result.stderr)
+
+    with col_c:
+        if st.button("Run JSON to PPTX"):
+            if not os.path.exists("json_output.json"):
+                st.error("json_output.json not found. Run CV to JSON first.")
+            else:
+                result = run_script("json_to_pptx.py")
+                if result.returncode != 0:
+                    st.error("json_to_pptx.py failed.")
+                else:
+                    st.success("PPTX generated.")
+
+                with st.expander("json_to_pptx.py output"):
+                    if result.stdout:
+                        st.code(result.stdout)
+                    if result.stderr:
+                        st.code(result.stderr)
+
+    st.markdown("---")
+
+    if os.path.exists("json_output.json"):
+        def load_json_text() -> str:
+            try:
+                with open("json_output.json", "r", encoding="utf-8") as f:
+                    return f.read()
+            except FileNotFoundError:
+                return ""
+
+        if "json_text" not in st.session_state:
+            st.session_state.json_text = load_json_text()
+
+        st.subheader("JSON Output")
+        json_text = st.text_area("Edit JSON", height=300, key="json_text")
+
+        col_json_a, col_json_b = st.columns(2)
+        with col_json_a:
+            if st.button("Save JSON"):
+                try:
+                    json_data = json.loads(json_text)
+                except json.JSONDecodeError as ex:
+                    st.error(f"Invalid JSON: {ex}")
+                else:
+                    with open("json_output.json", "w", encoding="utf-8") as f:
+                        f.write(json.dumps(json_data, ensure_ascii=False, indent=2))
+                    st.session_state.json_text = json.dumps(json_data, ensure_ascii=False, indent=2)
+                    st.success("JSON saved.")
+
+        with col_json_b:
+            st.download_button(
+                label="Download JSON",
+                data=json_text,
+                file_name="json_output.json",
+                mime="application/json"
+            )
+
+    if os.path.exists("sql_output.sql"):
+        def load_sql_text() -> str:
+            try:
+                with open("sql_output.sql", "r", encoding="utf-8") as f:
+                    return f.read()
+            except FileNotFoundError:
+                return ""
+
+        if "sql_text" not in st.session_state:
+            st.session_state.sql_text = load_sql_text()
+
+        st.subheader("SQL Output")
+        sql_text = st.text_area("Edit SQL", height=240, key="sql_text")
+
+        col_sql_a, col_sql_b = st.columns(2)
+        with col_sql_a:
+            if st.button("Save SQL"):
+                with open("sql_output.sql", "w", encoding="utf-8") as f:
+                    f.write(sql_text)
+                st.success("SQL saved.")
+
+        with col_sql_b:
+            st.download_button(
+                label="Download SQL",
+                data=sql_text,
+                file_name="sql_output.sql",
+                mime="text/sql"
+            )
+
+    pptx_output = "New_Profile_Final.pptx"
+    if os.path.exists(pptx_output):
+        with open(pptx_output, "rb") as f:
+            pptx_bytes = f.read()
+        st.subheader("PPTX Output")
+        st.download_button(
+            label="Download PPTX",
+            data=pptx_bytes,
+            file_name=pptx_output,
+            mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
+
+    st.markdown("---")
+    st.subheader("Export to folder")
+    if "export_stage" not in st.session_state:
+        st.session_state.export_stage = "idle"
+
+    if st.button("Export to folder"):
+        if not os.path.exists("json_output.json"):
+            st.error("json_output.json not found. Generate or save JSON first.")
+        else:
+            st.session_state.export_stage = "confirm"
+
+    if st.session_state.export_stage == "confirm":
+        st.info("Is the JSON above the one you want to use for export?")
+        col_confirm_a, col_confirm_b = st.columns(2)
+        with col_confirm_a:
+            if st.button("Yes, continue"):
+                st.session_state.export_stage = "name"
+        with col_confirm_b:
+            if st.button("No, cancel"):
+                st.session_state.export_stage = "idle"
+
+    if st.session_state.export_stage == "name":
+        export_name = st.text_input("Export name", key="export_name")
+        if st.button("Create export"):
+            raw_name = export_name.strip()
+            if raw_name and not raw_name.endswith("."):
+                raw_name = f"{raw_name}."
+            safe_name = sanitize_export_name(raw_name)
+            if not raw_name:
+                st.error("Please enter a name for the export folder.")
+            else:
+                sql_result = run_script("json_to_sql.py")
+                if sql_result.returncode != 0 or not os.path.exists("sql_output.sql"):
+                    st.error("SQL generation failed during export.")
+                else:
+                    ok, msg = build_pptx_with_title_suffix(raw_name)
+                    if not ok:
+                        st.error(msg)
+                    else:
+                        if not os.path.exists(pptx_output):
+                            st.error("PPTX file not found after generation.")
+                        else:
+                            target_dir = os.path.join("profiles_to_insert", safe_name)
+                            os.makedirs(target_dir, exist_ok=True)
+
+                            pptx_named = f"New_Profile_Final({safe_name}).pptx"
+
+                            shutil.copy2("json_output.json", os.path.join(target_dir, "json_output.json"))
+                            shutil.copy2("sql_output.sql", os.path.join(target_dir, "sql_output.sql"))
+                            shutil.copy2(pptx_output, os.path.join(target_dir, pptx_named))
+                            st.success(f"Exported to {target_dir}.")
+                            st.session_state.export_stage = "idle"
 
 
 if selected_page == "Catalogue":

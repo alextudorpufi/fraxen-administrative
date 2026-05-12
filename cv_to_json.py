@@ -35,7 +35,7 @@ def create_gemini_payload_config() -> tuple[str, types.GenerateContentConfig]:
         type=types.Type.OBJECT,
         properties={
             "title": types.Schema(type=types.Type.STRING, description="The highest-level functional title or primary role of the candidate (e.g., Fractional CFO | Strategic Financial Leader)."),
-            "gender": types.Schema(type=types.Type.STRING, description="The candidate's gender."),
+            "gender": types.Schema(type=types.Type.STRING, description="The candidate's gender. Guess by (mostly Romanian) name and pronouns used in the CV."),
             "experience_summary": types.Schema(type=types.Type.STRING, description="A generalized summary of the candidate's total experience, focusing on tenure and type of firm (e.g., 20+ years, Global consulting firm background). Must NOT include specific company names or brand names like 'Big4'. Must be of maximum 10 words"),
             "sector_focus": types.Schema(type=types.Type.STRING, description="The primary industry sectors the candidate focuses on."),
             "location": types.Schema(type=types.Type.STRING, description="The candidate's general geographic region and availability (e.g., North America (Remote/Hybrid)). Must NOT include city names, but can include country names."),

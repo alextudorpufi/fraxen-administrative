@@ -1,51 +1,47 @@
 {
-    "title": "Fractional CFO | Strategic Financial Leader",
-    "gender": "Female",
-    "experience_summary": "20+ years, strategic financial leadership across diverse industries.",
-    "sector_focus": "Technology, Real Estate, Multi-entity Organizations",
-    "location": "Europe (Remote/Hybrid)",
+    "title": "Business Lawyer | Real Estate Specialist",
+    "gender": "Male",
+    "experience_summary": "20+ years, top-tier law firm and in-house business exposure.",
+    "sector_focus": "Real Estate, Development, M&A, Corporate, Banking & Finance",
+    "location": "Romania (Remote/Hybrid)",
     "experience": [
         {
-            "job_title": "Fractional CFO & Investment Advisor",
-            "description": "Empowering high-growth tech startups and institutional investors with strategic financial leadership.",
+            "job_title": "Managing Partner",
+            "description": "Founder and leader of a specialized legal advisory firm.",
             "achievements": [
-                "Successfully prepared and supported multiple fundraising rounds, accelerating due diligence.",
-                "Led finance transformation projects, integrating ERP systems and AI automation.",
-                "Provided M&A advisory, valuations, and transaction management."
+                "Advised top-tier clients on real estate, M&A and financing matters exceeding EUR 150 million.",
+                "Directed legal operations, client development, and market positioning."
             ]
         },
         {
-            "job_title": "Chief Financial Officer",
-            "description": "Orchestrated financial strategy for a significant real estate development and logistics portfolio.",
+            "job_title": "Head of Real Estate (Of Counsel)",
+            "description": "Senior counsel leading real estate practice at a prominent law firm.",
             "achievements": [
-                "Structured finance organization for a EUR 250M+ development portfolio.",
-                "Built multi-project forecasting and cash flow coordination across complex operations.",
-                "Introduced ERP-based project control and reporting for end-to-end visibility."
+                "Led client engagements on complex development, acquisition, and commercial real estate matters.",
+                "Coordinated team development, training, and market-facing initiatives."
             ]
         },
         {
-            "job_title": "Group Chief Financial Officer",
-            "description": "Centralized and optimized finance operations for a multi-entity technology and SaaS group.",
+            "job_title": "Partner - Head of Real Estate",
+            "description": "Key leader of the real estate practice at a global law firm.",
             "achievements": [
-                "Centralized finance operations for a multi-entity tech group with cross-functional reporting.",
-                "Implemented ERP systems with profitability tracking by client and product line.",
-                "Developed performance dashboards linking operational efficiency with profitability metrics."
+                "Advised on a landmark real estate transaction valued at over EUR 500 million.",
+                "Provided legal assistance to a national government for a major privatization."
             ]
         },
         {
-            "job_title": "Managing Director / CFO",
-            "description": "Pioneered and led a regional real estate investment platform from its inception.",
+            "job_title": "Senior Associate - Real Estate",
+            "description": "Experienced legal professional advising major investors in real estate.",
             "achievements": [
-                "Built a regional real estate investment platform from inception, managing multiple entities.",
-                "Negotiated complex credit restructurings and optimized group cash flow.",
-                "Implemented robust ERP and transfer pricing frameworks for accurate multi-entity reporting."
+                "Advised on office, retail, industrial, and residential projects with aggregate values exceeding EUR 400 million.",
+                "Supported significant development and investment initiatives."
             ]
         }
     ],
     "core_strengths": [
-        "Strategic Financial Leadership",
-        "Business Growth & Capital Strategy",
-        "Finance Transformation & Automation",
-        "Operational Excellence & M&A"
+        "Real Estate & Investments",
+        "M&A and Strategic Transactions",
+        "Development & Construction Law",
+        "Corporate Governance & Finance"
     ]
 }
