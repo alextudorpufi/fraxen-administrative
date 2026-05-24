@@ -5,6 +5,7 @@ import os
 import shutil
 import subprocess
 import sys
+import zipfile
 import streamlit as st
 import pandas as pd
 from database import fetch_all_data, Executive, Highlight, Strength
@@ -355,6 +356,37 @@ def render_test_tool_page():
 
         return True, "PPTX generated."
 
+    def build_export_zip_bytes(export_base_name: str) -> tuple[bytes, str] | tuple[None, str]:
+        """Builds a ZIP containing the current JSON/SQL/PPTX outputs for downloading to the client's computer."""
+        if not os.path.exists("json_output.json"):
+            return None, "json_output.json not found. Generate or save JSON first."
+
+        safe_base = sanitize_export_name(export_base_name.strip()) if export_base_name else "export"
+        if not safe_base:
+            safe_base = "export"
+
+        # Ensure SQL exists (best-effort)
+        if not os.path.exists("sql_output.sql"):
+            sql_result = run_script("json_to_sql.py")
+            if sql_result.returncode != 0 or not os.path.exists("sql_output.sql"):
+                return None, "SQL generation failed while preparing download."
+
+        # Ensure PPTX exists (best-effort)
+        pptx_output = "New_Profile_Final.pptx"
+        if not os.path.exists(pptx_output):
+            pptx_result = run_script("json_to_pptx.py")
+            if pptx_result.returncode != 0 or not os.path.exists(pptx_output):
+                return None, "PPTX generation failed while preparing download."
+
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, mode="w", compression=zipfile.ZIP_DEFLATED) as zf:
+            zf.write("json_output.json", arcname="json_output.json")
+            zf.write("sql_output.sql", arcname="sql_output.sql")
+            zf.write(pptx_output, arcname=pptx_output)
+
+        buf.seek(0)
+        return buf.getvalue(), f"{safe_base}.zip"
+
     col_a, col_b, col_c = st.columns(3)
 
     with col_a:
@@ -489,6 +521,29 @@ def render_test_tool_page():
             data=pptx_bytes,
             file_name=pptx_output,
             mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
+
+    st.markdown("---")
+
+    st.subheader("Download to your computer")
+    st.caption("Creates a ZIP with JSON + SQL + PPTX and downloads it via your browser.")
+
+    download_name = st.text_input("Download name", key="download_name", value="export")
+    if st.button("Prepare download (ZIP)"):
+        zip_bytes, zip_name_or_error = build_export_zip_bytes(download_name or "export")
+        if not zip_bytes:
+            st.error(zip_name_or_error)
+        else:
+            st.session_state.export_zip_bytes = zip_bytes
+            st.session_state.export_zip_name = zip_name_or_error
+            st.success("Download ready.")
+
+    if "export_zip_bytes" in st.session_state and st.session_state.export_zip_bytes:
+        st.download_button(
+            label="Download ZIP",
+            data=st.session_state.export_zip_bytes,
+            file_name=st.session_state.get("export_zip_name", "export.zip"),
+            mime="application/zip"
         )
 
     st.markdown("---")
